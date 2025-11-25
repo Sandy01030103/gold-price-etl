@@ -17,9 +17,6 @@ def fetch_gold_price() -> str:
         response = requests.get(URL, timeout=10)
         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
 
-        # Explicitly set the encoding to UTF-8 to prevent garbled characters (mojibake)
-        response.encoding = 'utf-8'
-
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # Find the table cell ('td') that contains the text "黃金條塊".
