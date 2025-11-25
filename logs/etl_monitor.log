@@ -1,0 +1,91 @@
+2025-11-25 11:48:34,783 - INFO - Starting ETL process...
+2025-11-25 11:48:35,140 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: 'NoneType' object has no attribute 'find_parent'
+Traceback (most recent call last):
+  File "C:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 23, in fetch_gold_price
+    gold_bar_row = soup.find('td', string='黃金條塊').find_parent('tr')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find_parent'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "C:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 35, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: 'NoneType' object has no attribute 'find_parent'
+2025-11-25 12:03:59,471 - INFO - Starting ETL process...
+2025-11-25 12:04:00,935 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 27, in fetch_gold_price
+    raise ValueError("Could not find the '黃金條塊' row in the price table.")
+ValueError: Could not find the '黃金條塊' row in the price table.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 43, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+2025-11-25 12:04:09,429 - INFO - Starting ETL process...
+2025-11-25 12:04:09,862 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 27, in fetch_gold_price
+    raise ValueError("Could not find the '黃金條塊' row in the price table.")
+ValueError: Could not find the '黃金條塊' row in the price table.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 43, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+2025-11-25 12:08:11,939 - INFO - Starting ETL process...
+2025-11-25 12:08:12,297 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 27, in fetch_gold_price
+    raise ValueError("Could not find the '黃金條塊' row in the price table.")
+ValueError: Could not find the '黃金條塊' row in the price table.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 42, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+2025-11-25 12:08:21,843 - INFO - Starting ETL process...
+2025-11-25 12:08:22,370 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 27, in fetch_gold_price
+    raise ValueError("Could not find the '黃金條塊' row in the price table.")
+ValueError: Could not find the '黃金條塊' row in the price table.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 42, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+2025-11-25 12:29:13,066 - INFO - Starting ETL process...
+2025-11-25 12:29:13,946 - ERROR - An error occurred during the ETL process: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 30, in fetch_gold_price
+    raise ValueError("Could not find the '黃金條塊' row in the price table.")
+ValueError: Could not find the '黃金條塊' row in the price table.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\sandy\.vscode\gold-price-etl\main.py", line 38, in main
+    raw_price = fetch_gold_price()
+  File "c:\Users\sandy\.vscode\gold-price-etl\src\scraper.py", line 45, in fetch_gold_price
+    raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+ValueError: Failed to parse HTML structure. The website layout may have changed. Details: Could not find the '黃金條塊' row in the price table.
