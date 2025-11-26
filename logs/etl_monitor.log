@@ -109,3 +109,7 @@ Traceback (most recent call last):
   File "/home/runner/work/gold-price-etl/gold-price-etl/src/db_manager.py", line 49, in insert_price
     cursor.execute(
 sqlite3.OperationalError: table gold_prices has no column named bank_selling_price
+2025-11-26 01:29:10,197 - INFO - Starting ETL process...
+2025-11-26 01:29:10,990 - INFO - Successfully fetched raw data: {'bank_selling': '4208', 'bank_buying': '4162'}
+2025-11-26 01:29:10,990 - INFO - Data validation result: Prices={'bank_selling_price': 4208.0, 'bank_buying_price': 4162.0}, Status=OK
+2025-11-26 01:29:10,992 - INFO - Successfully inserted data into the database.
