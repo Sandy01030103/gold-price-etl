@@ -10,8 +10,8 @@ from datetime import datetime
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 
-DB_PATH = 'data/gold_prices.db'
-CHARTS_DIR = 'charts'
+DB_PATH = 'data/gold_prices.db' # 資料庫的位址
+CHARTS_DIR = 'charts' # 畫出來的圖片要放到的位址
 
 def generate_trend_chart():
     """
@@ -59,4 +59,5 @@ def generate_trend_chart():
         print(f"An error occurred while generating the chart: {e}")
 
 if __name__ == "__main__":
+    print(f"project root: {project_root}")
     generate_trend_chart()

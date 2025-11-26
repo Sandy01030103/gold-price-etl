@@ -20,7 +20,7 @@ def clean_and_validate_prices(raw_prices: Dict[str, Optional[str]]) -> Tuple[Opt
         if not selling_price_str or not buying_price_str:
             return None, 'Warning'
 
-        selling_price = float(selling_price_str.replace(',', ''))
+        selling_price = float(selling_price_str.replace(',', '')) # 刪掉數字中的逗號, ex: 4,200 -> 4200
         buying_price = float(buying_price_str.replace(',', ''))
 
         if selling_price > 0 and buying_price > 0:

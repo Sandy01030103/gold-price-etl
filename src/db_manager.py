@@ -5,7 +5,7 @@ from datetime import datetime
 class DBManager:
     """Manages all database operations for the gold price data."""
 
-    def __init__(self, db_path: str):
+    def __init__(self, db_path: str): #初始化函式
         """
         Initializes the DBManager.
 
@@ -15,7 +15,7 @@ class DBManager:
         self.db_path = db_path
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
 
-    def _get_connection(self):
+    def _get_connection(self): #定義實體方法
         """Establishes and returns a database connection."""
         return sqlite3.connect(self.db_path)
 
