@@ -1,42 +1,79 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://rate.bot.com.tw/gold"
+# The URL matches the content of your HTML file (Bank of Taiwan Gold Rate)
+URL = "https://rate.bot.com.tw/gold/"
 
-def fetch_gold_price() -> str:
+def get_bot_gold_price(url: str) -> dict:
     """
-    Fetches the selling price of gold from the Bank of Taiwan website.
-
-    Returns:
-        str: The raw price string scraped from the page.
-
-    Raises:
-        Exception: If the request fails or the HTML structure is not as expected.
+    Fetches the Bank of Taiwan Gold Passbook rates (Selling and Buying).
     """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    }
+
     try:
-        response = requests.get(URL, timeout=10)
-        response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        raise ConnectionError(f"Failed to connect to {url}: {e}")
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Find the table cell ('td') that contains the text "黃金條塊".
-        # We use a lambda function to search for the text within the cell, ignoring whitespace.
-        gold_bar_cell = soup.find('td', string=lambda text: text and '黃金條塊' in text.strip())
+    # --- DEBUGGING: Save Soup to File (Optional, kept from your original code) ---
+    debug_filename = "debug_sou.html"
+    with open(debug_filename, "w", encoding="utf-8") as f:
+        f.write(soup.prettify())
+    print(f"Debug file '{debug_filename}' updated.")
+    # ------------------------------------
 
-        if not gold_bar_cell:
-            raise ValueError("Could not find the '黃金條塊' row in the price table.")
+    # 1. Find the specific table. 
+    # In your HTML, the table has the title "新臺幣黃金牌價"
+    table = soup.find('table', attrs={'title': '新臺幣黃金牌價'})
 
-        # The cell we found is the first cell of the row. The price is in the same row ('tr').
-        gold_bar_row = gold_bar_cell.find_parent('tr')
+    if not table:
+        raise ValueError("Could not find the Gold Rate table with title '新臺幣黃金牌價'.")
 
-        # Find all cells with the class 'text-right' in that row, as these contain the prices.
-        price_cells = gold_bar_row.find_all('td', class_='text-right')
+    # Initialize results
+    prices = {
+        "bank_selling": None, # The price you pay to buy gold (本行賣出)
+        "bank_buying": None   # The price the bank pays to buy back gold (本行買進)
+    }
 
-        # The last price cell in the "本行賣出" (selling) row is for "100 公克" (100g).
-        price_td = price_cells[-1]
-        return price_td.text.strip().replace(',', '')
+    # 2. Iterate through the table rows (tr)
+    rows = table.find_all('tr')
+    
+    for row in rows:
+        # Clean the text of the row to find identifying keywords
+        row_text = row.get_text(strip=True)
 
-    except requests.exceptions.RequestException as e:
-        raise ConnectionError(f"Failed to retrieve data from {URL}: {e}") from e
-    except (AttributeError, IndexError, ValueError) as e:
-        raise ValueError(f"Failed to parse HTML structure. The website layout may have changed. Details: {e}") from e
+        # 3. Logic for "Bank Selling" (本行賣出) - The price listed is 4200 in your file
+        if "本行賣出" in row_text:
+            # The price is in a 'td' with class 'text-right'
+            # Note: The cell contains "4200" AND a button text "買進". 
+            # We need to extract just the number.
+            price_td = row.find('td', class_='text-right')
+            if price_td:
+                # stripped_strings returns a generator of text parts. 
+                # [0] is the price (4200), [1] is the button text (買進)
+                prices["bank_selling"] = list(price_td.stripped_strings)[0]
+
+        # 4. Logic for "Bank Buying" (本行買進) - The price listed is 4150 in your file
+        if "本行買進" in row_text:
+            price_td = row.find('td', class_='text-right')
+            if price_td:
+                prices["bank_buying"] = list(price_td.stripped_strings)[0]
+
+    return prices
+
+if __name__ == "__main__":
+    try:
+        data = get_bot_gold_price(URL)
+        print("-" * 30)
+        print("Bank of Taiwan - Gold Passbook (1 Gram)")
+        print("-" * 30)
+        print(f"Bank Selling (Price to Buy): {data['bank_selling']} TWD")
+        print(f"Bank Buying  (Price to Sell): {data['bank_buying']} TWD")
+        print("-" * 30)
+    except Exception as e:
+        print(f"Error: {e}")
