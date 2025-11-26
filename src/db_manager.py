@@ -27,23 +27,27 @@ class DBManager:
                 CREATE TABLE IF NOT EXISTS gold_prices (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     fetch_time DATETIME NOT NULL,
-                    price REAL NOT NULL,
+                    bank_selling_price REAL NOT NULL,
+                    bank_buying_price REAL NOT NULL,
                     status TEXT NOT NULL
                 )
             """)
             conn.commit()
 
-    def insert_price(self, fetch_time: datetime, price: float, status: str):
+    def insert_price(self, fetch_time: datetime, bank_selling_price: float, bank_buying_price: float, status: str):
         """
         Inserts a new price record into the database.
 
         Args:
             fetch_time (datetime): The timestamp of when the data was fetched.
-            price (float): The cleaned gold price.
+            bank_selling_price (float): The cleaned bank selling price.
+            bank_buying_price (float): The cleaned bank buying price.
             status (str): The status of the data ('OK').
         """
         with self._get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO gold_prices (fetch_time, price, status) VALUES (?, ?, ?)",
-                           (fetch_time, price, status))
+            cursor.execute(
+                "INSERT INTO gold_prices (fetch_time, bank_selling_price, bank_buying_price, status) VALUES (?, ?, ?, ?)",
+                (fetch_time, bank_selling_price, bank_buying_price, status)
+            )
             conn.commit()
