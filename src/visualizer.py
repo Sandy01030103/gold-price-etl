@@ -28,7 +28,7 @@ def generate_trend_chart():
     try:
         # Connect to the database and read data into a pandas DataFrame
         conn = sqlite3.connect(DB_PATH)
-        df = pd.read_sql_query("SELECT fetch_time, price FROM gold_prices WHERE status='OK' ORDER BY fetch_time", conn)
+        df = pd.read_sql_query("SELECT fetch_time, bank_selling_price FROM gold_prices WHERE status='OK' ORDER BY fetch_time", conn)
         conn.close()
 
         if df.empty:
@@ -39,12 +39,12 @@ def generate_trend_chart():
         df['fetch_time'] = pd.to_datetime(df['fetch_time'])
 
         # Plotting
-        plt.style.use('seaborn-v0_8-grid')
+        plt.style.use('ggplot')
         plt.figure(figsize=(12, 6))
-        plt.plot(df['fetch_time'], df['price'], marker='o', linestyle='-', color='gold')
-        plt.title('Gold Price Trend', fontsize=16)
+        plt.plot(df['fetch_time'], df['bank_selling_price'], marker='o', linestyle='-', color='gold')
+        plt.title('Gold Price Trend (Bank Selling Price)', fontsize=16)
         plt.xlabel('Date and Time', fontsize=12)
-        plt.ylabel('Price (TWD)', fontsize=12)
+        plt.ylabel('Bank Selling Price (TWD)', fontsize=12)
         plt.grid(True)
         plt.xticks(rotation=45)
         plt.tight_layout()
