@@ -229,3 +229,7 @@ sqlite3.OperationalError: table gold_prices has no column named bank_selling_pri
 2025-11-27 08:26:45,147 - INFO - Successfully fetched raw data: {'bank_selling': '4217', 'bank_buying': '4167'}
 2025-11-27 08:26:45,148 - INFO - Data validation result: Prices={'bank_selling_price': 4217.0, 'bank_buying_price': 4167.0}, Status=OK
 2025-11-27 08:26:45,150 - INFO - Successfully inserted data into the database.
+2025-11-27 09:21:23,889 - INFO - Starting ETL process...
+2025-11-27 09:21:24,422 - INFO - Successfully fetched raw data: {'bank_selling': '4208', 'bank_buying': '4158'}
+2025-11-27 09:21:24,422 - INFO - Data validation result: Prices={'bank_selling_price': 4208.0, 'bank_buying_price': 4158.0}, Status=OK
+2025-11-27 09:21:24,424 - INFO - Successfully inserted data into the database.
