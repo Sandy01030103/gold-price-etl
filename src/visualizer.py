@@ -28,7 +28,7 @@ def generate_trend_chart():
     try:
         # Connect to the database and read data into a pandas DataFrame
         conn = sqlite3.connect(DB_PATH)
-        df = pd.read_sql_query("SELECT fetch_time, bank_selling_price FROM gold_prices WHERE status='OK' ORDER BY fetch_time", conn)
+        df = pd.read_sql_query("SELECT fetch_time, bank_selling_price FROM gold_prices WHERE status='OK' ORDER BY fetch_time DESC LIMIT 10", conn)
         conn.close()
 
         if df.empty:

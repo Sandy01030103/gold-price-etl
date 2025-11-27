@@ -2,6 +2,7 @@ import os
 import sys
 import logging
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 # Add the project root directory to the Python path to resolve module imports
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -46,7 +47,7 @@ def main():
 
         # 3. Load
         if status == 'OK':
-            fetch_time = datetime.now() # 現在的時間
+            fetch_time = datetime.now(ZoneInfo("Asia/Taipei")) # 現在的時間
             db_manager.insert_price(
                 fetch_time,
                 cleaned_prices["bank_selling_price"], # 清理好的賣出價格
