@@ -11,9 +11,9 @@ def get_bot_gold_price(url: str) -> dict:
 
     try:
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
+        response.raise_for_status() #
     except requests.RequestException as e:
-        raise ConnectionError(f"Failed to connect to {url}: {e}")
+        raise ConnectionError(f"Failed to connect to {url}: {e}") 
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -22,7 +22,7 @@ def get_bot_gold_price(url: str) -> dict:
     # In your HTML, the table has the title "新臺幣黃金牌價"
     table = soup.find('table', attrs={'title': '新臺幣黃金牌價'})
 
-    if not table: # 確認table是不是空的
+    if not table: # 確認table是不是空的 (如果是空的)
         raise ValueError("Could not find the Gold Rate table with title '新臺幣黃金牌價'.")
 
     # Initialize results
@@ -35,20 +35,15 @@ def get_bot_gold_price(url: str) -> dict:
     rows = table.find_all('tr') # rows=[第一行, 第二行, 第三行, 第四行]
     
     for row in rows:
-        # Clean the text of the row to find identifying keywords
         row_text = row.get_text(strip=True) # row_text=品名規格單位：新臺幣元
 
-        # 3. Logic for "Bank Selling" (本行賣出) - The price listed is 4200 in your file
+        
         if "本行賣出" in row_text:
-            # The price is in a 'td' with class 'text-right'
-            # Note: The cell contains "4200" AND a button text "買進". 
-            # We need to extract just the number.
-            price_td = row.find('td', class_='text-right') # price_td=4224
-            # stripped_strings returns a generator of text parts. 
-            # [0] is the price (4200), [1] is the button text (買進)
+            price_td = row.find('td', class_='text-right') # 找到的 <td> 標籤必須具有一個 class 屬性，且其值為 'text-right'。
             prices["bank_selling"] = list(price_td.stripped_strings)[0]
+            #.得到一個文字列表，結構類似 ["4200", "買進"]。
 
-        # 4. Logic for "Bank Buying" (本行買進) - The price listed is 4150 in your file
+        
         if "本行買進" in row_text:
             price_td = row.find('td', class_='text-right')
             prices["bank_buying"] = list(price_td.stripped_strings)[0]
